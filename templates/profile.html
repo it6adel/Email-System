@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Profile</h2>
+
+<div class="profile-section">
+    <h3>User Information</h3>
+    <p><strong>Username:</strong> {{ current_user.username }}</p>
+</div>
+
+<hr>
+
+<div class="profile-section">
+    <h3>GPG Key Management</h3>
+    {% if current_user.gpg_fingerprint %}
+    <p><strong>Registered GPG Key Fingerprint:</strong></p>
+    <pre>{{ current_user.gpg_fingerprint }}</pre>
+    <p class="note">To change your key, simply import a new one below. The new fingerprint will replace the old one.</p>
+    {% else %}
+    <p>You have not registered a GPG key yet. You need one to receive encrypted emails.</p>
+    <p class="note">Generate a key using `gpg --full-generate-key`, then export your public key using `gpg --export --armor YOUR_EMAIL_OR_KEYID` and paste the entire block (including -----BEGIN... and -----END...) below.</p>
+    {% endif %}
+
+    <h4>Import/Update GPG Public Key</h4>
+    <form method="POST" action="{{ url_for('profile') }}">
+        <div class="form-group">
+            <label for="gpg_public_key">Paste your GPG Public Key Block:</label>
+            <textarea id="gpg_public_key" name="gpg_public_key" rows="10" required placeholder="-----BEGIN PGP PUBLIC KEY BLOCK-----
+...
+-----END PGP PUBLIC KEY BLOCK-----"></textarea>
+        </div>
+        <button type="submit" class="btn">Import Key</button>
+    </form>
+</div>
+
+{% endblock %}

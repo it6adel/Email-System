@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="view-email-container">
+    <h2>{{ email.subject }}</h2>
+    <div class="email-meta">
+        <p><strong>From:</strong> {{ email.sender.username }}</p>
+        <p><strong>To:</strong> {{ email.recipient.username }}</p>
+        <p><strong>Date:</strong> {{ email.timestamp.strftime('%Y-%m-%d %H:%M:%S %Z') }}</p>
+        <p><strong>Encryption:</strong> {{ email.encryption_type }}</p> {# Will show 'GPG' or 'None' #}
+        {% if email.encryption_type == 'GPG' and not is_recipient %}
+        <p class="note"><em>Content encrypted with GPG. Only the recipient ({{ email.recipient.username }}) can decrypt.</em></p>
+        {% endif %}
+    </div>
+    <hr>
+    <div class="email-body">
+        <h3>Body:</h3>
+        {# Use <pre> to preserve formatting/newlines and GPG block structure #}
+        <pre>{{ decrypted_body }}</pre>
+    </div>
+    <div class="email-actions">
+         <a href="{{ url_for('index') if is_recipient else url_for('sent') }}" class="btn btn-secondary">Back to {{ 'Inbox' if is_recipient else 'Sent Items' }}</a>
+         {# Reply functionality not implemented #}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="form-container compose-container">
+    <h2>Compose New Email</h2>
+    <form method="POST" action="{{ url_for('compose') }}">
+        <div class="form-group">
+            <label for="recipient">Recipient</label>
+            <select id="recipient" name="recipient" required>
+                <option value="" disabled {% if not s_recipient %}selected{% endif %}>Select recipient...</option>
+                {% for user in users %}
+                <option value="{{ user.username }}" {% if s_recipient == user.username %}selected{% endif %}>{{ user.username }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" value="{{ s_subject or '' }}" required>
+        </div>
+        <div class="form-group">
+            <label for="body">Body</label>
+            <textarea id="body" name="body" rows="10" required>{{ s_body or '' }}</textarea>
+        </div>
+
+        {# Replaced encryption dropdown with this checkbox #}
+        <div class="form-group form-check">
+             <input type="checkbox" id="encrypt_gpg" name="encrypt_gpg" {% if s_encrypt %}checked{% endif %}>
+             <label for="encrypt_gpg">Encrypt with GPG (Recipient must have a registered key)</label>
+        </div>
+
+        <button type="submit" class="btn">Send Email</button>
+    </form>
+</div>
+{% endblock %}
