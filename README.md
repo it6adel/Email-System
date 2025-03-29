@@ -208,7 +208,7 @@ Application configuration is handled via the `Config` class in `config.py` and e
 ---
 
 ## 12. File Structure
-/local_email_system
+```/local_email_system
 ├── .venv/ # Virtual environment directory
 ├── static/
 │ └── css/
@@ -228,4 +228,4 @@ Application configuration is handled via the `Config` class in `config.py` and e
 ├── database.py # Database models (User, Email), init function
 ├── gnupg_helper.py # Helper functions for GnuPG interactions
 ├── requirements.txt # Python dependencies
-└── app.db # SQLite database file (created on first run)
+└── app.db # SQLite database file (created on first run)```
