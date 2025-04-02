@@ -4,3 +4,4 @@ Flask-Login>=0.5
 cryptography>=3.4
 pycryptodome>=3.10
 Werkzeug>=2.0
+python-gnupg
