@@ -5,7 +5,7 @@ from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from urllib.parse import urlparse
 
-# Assuming config.py is in the same directory
+
 from config import Config
 from database import db, User, Email, init_db
 # Import the GPG helper module
